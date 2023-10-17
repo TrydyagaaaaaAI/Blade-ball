@@ -9,12 +9,13 @@ local function createGUI()
     screenGui.Name = "AbilityChooser"
     screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
-    local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0.080, 100, 0.45, 100)
-    frame.Position = UDim2.new(0.15, -90, 0.4, -100)
-    frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    frame.BorderSizePixel = 0
-    frame.Parent = screenGui
+    local mainMenuFrame = Instance.new("Frame")
+    mainMenuFrame.Size = UDim2.new(0.080, 100, 0.45, 100)
+    mainMenuFrame.Position = UDim2.new(0.15, -90, 0.4, -100)
+    mainMenuFrame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    mainMenuFrame.BorderSizePixel = 0
+    mainMenuFrame.Name = "MainMenu"
+    mainMenuFrame.Parent = screenGui
 
     local isDragging = false
     local dragInput
@@ -23,14 +24,14 @@ local function createGUI()
 
     local function update(input)
         local delta = input.Position - dragStart
-        frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        mainMenuFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 
-    frame.InputBegan:Connect(function(input)
+    mainMenuFrame.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.Touch then
             isDragging = true
             dragStart = input.Position
-            startPos = frame.Position
+            startPos = mainMenuFrame.Position
 
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then
@@ -40,7 +41,7 @@ local function createGUI()
         end
     end)
 
-    frame.InputChanged:Connect(function(input)
+    mainMenuFrame.InputChanged:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.Touch then
             dragInput = input
         end
@@ -59,12 +60,29 @@ local function createGUI()
         button.Size = UDim2.new(1, 0, 0, buttonHeight)
         button.Position = UDim2.new(0, 0, 0, (i - 1) * (buttonHeight + 5))
         button.Text = ability
-        button.BackgroundColor3 = Color3.new(0.8, 0.8, 0.8)
-        button.BorderColor3 = Color3.new(1, 1, 1)
-        button.Parent = frame
+        button.BackgroundColor3 = Color3.fromRGB(37, 63, 96)
+        button.TextColor3 = Color3.fromRGB(135, 206, 250)
+
+        button.Parent = mainMenuFrame
         
         button.MouseButton1Click:Connect(function()
             ChosenAbility = ability
+            mainMenuFrame.Visible = false
+            local abilityMenuFrame = screenGui:FindFirstChild(ability)
+            if not abilityMenuFrame then
+                abilityMenuFrame = Instance.new("Frame")
+                abilityMenuFrame.Size = UDim2.new(0.4, 0, 0.4, 0)
+                abilityMenuFrame.Position = UDim2.new(0.3, 0, 0.3, 0)
+                abilityMenuFrame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+                abilityMenuFrame.BorderSizePixel = 0
+                abilityMenuFrame.Name = ability
+                abilityMenuFrame.Parent = screenGui
+                
+                -- TODO: Add UI elements specific to the ability menu
+                -- Example: Add labels, buttons, etc.
+            else
+                abilityMenuFrame.Visible = true
+            end
         end)
     end
 end
