@@ -1,6 +1,3 @@
-Вот исправленный код с добавленным меню и выбором абилити:
-
-```lua
 local localPlayer = game.Players.LocalPlayer
 local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
 local abilitiesFolder = character:WaitForChild("Abilities")
@@ -96,4 +93,3 @@ local function createGUI()
 end
 
 createGUI()
-```
