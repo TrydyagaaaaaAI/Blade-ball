@@ -62,30 +62,29 @@ local function createGUI()
         button.BackgroundColor3 = Color3.new(0.8, 0.8, 0.8)
         button.BorderColor3 = Color3.new(1, 1, 1)
         button.Parent = frame
-        
+
         button.MouseButton1Click:Connect(function()
             ChosenAbility = ability
         end)
     end
-    
-    local collapseButton = Instance.new("TextButton")
-    collapseButton.Size = UDim2.new(1, 0, 0, 20)
-    collapseButton.Position = UDim2.new(0, 0, 1, -20)
-    collapseButton.Text = "Свернуть"
-    collapseButton.BackgroundColor3 = Color3.new(0.8, 0.8, 0.8)
-    collapseButton.BorderColor3 = Color3.new(1, 1, 1)
+
+    local collapseButton = Instance.new("ImageButton")
+    collapseButton.Size = UDim2.new(0, 20, 0, 20)
+    collapseButton.Position = UDim2.new(1, -20, 1, -20)
+    collapseButton.BackgroundTransparency = 1
+    collapseButton.Image = "rbxassetid://0000000" -- Insert image ID here
     collapseButton.Parent = frame
-    
+
     local isCollapsed = false
 
     local function toggleCollapse()
         isCollapsed = not isCollapsed
         if isCollapsed then
-            collapseButton.Text = "Развернуть"
+            collapseButton.Image = "rbxassetid://0000001" -- Change to image ID of a collapsed icon
             frame.Size = UDim2.new(0.080, 100, 0, 20)
             frame.Position = UDim2.new(0.15, -90, 1, -20)
         else
-            collapseButton.Text = "Свернуть"
+            collapseButton.Image = "rbxassetid://0000000" -- Change to image ID of an expanded icon
             frame.Size = UDim2.new(0.080, 100, 0.45, 100)
             frame.Position = UDim2.new(0.15, -90, 0.4, -100)
         end
